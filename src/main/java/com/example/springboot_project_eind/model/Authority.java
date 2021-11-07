@@ -17,11 +17,10 @@ public class Authority implements Serializable {
     @Column(nullable = false)
     private String authority;
 
-    public Authority(String username, String authorityString) {
-    }
-
-    public Authority() {
-
+    public Authority() {}
+    public Authority(String username, String authority) {
+        this.username = username;
+        this.authority = authority;
     }
 
     public String getUsername() {

@@ -21,12 +21,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @GetMapping(value = "")
     public ResponseEntity<Object> getUsers() {
         return ResponseEntity.ok().body(userService.getUsers());
     }
-      @PreAuthorize("hasRole('ROLE_ADMIN')")
+
+
     @GetMapping(value = "/{username}")
     public ResponseEntity<Object> getUser(@PathVariable("username") String username) {
         return ResponseEntity.ok().body(userService.getUser(username));
@@ -43,12 +44,13 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
-//    @PutMapping(value = "/{username}")
-//    public ResponseEntity<Object> updateCustomer(@PathVariable("username") String username, @RequestBody User user) {
-//        userService.updateUser(username, user);
-//        return ResponseEntity.noContent().build();
-//    }
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping(value = "/{username}")
+    public ResponseEntity<Object> updateCustomer(@PathVariable("username") String username, @RequestBody User user) {
+        userService.updateUser(username, user);
+        return ResponseEntity.noContent().build();
+    }
+
+
     @DeleteMapping(value = "/{username}")
     public ResponseEntity<Object> deleteUser(@PathVariable("username") String username) {
         userService.deleteUser(username);
@@ -66,8 +68,7 @@ public class UserController {
             String authorityName = (String) fields.get("authority");
             userService.addAuthority(username, authorityName);
             return ResponseEntity.noContent().build();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new BadRequestException();
         }
     }

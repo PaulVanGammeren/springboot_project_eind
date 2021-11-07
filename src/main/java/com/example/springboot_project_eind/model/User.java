@@ -1,6 +1,10 @@
 package com.example.springboot_project_eind.model;
 
 import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,10 +19,10 @@ public class User {
     @Column(nullable = false, length = 80)
     private String password;
 
-    @Column(nullable = false)
+    @Column
     private boolean enabled = true;
 
-    @Column(nullable =false)
+    @Column
     private String email;
 
     @OneToMany(
@@ -28,6 +32,8 @@ public class User {
             orphanRemoval = true,
             fetch = FetchType.EAGER)
     private Set<Authority> authorities = new HashSet<>();
+
+
 
     public String getUsername() {
         return username;
@@ -73,6 +79,10 @@ public class User {
         this.authorities.add(authority);
     }
 
+    public String getFullName() {
+        return this.getUsername() + " " + this.getEmail();
+    }
+
     public void addAuthority(String authorityString) {
         this.authorities.add(new Authority(this.username, authorityString));
     }
@@ -81,8 +91,7 @@ public class User {
         this.authorities.remove(authority);
     }
 
-    public void removeAuthority(String authorityString) {
-        this.authorities.removeIf(authority -> authority.getAuthority().equalsIgnoreCase(authorityString));
-    }
+
+
 }
 

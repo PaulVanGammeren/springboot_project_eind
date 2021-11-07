@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,8 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUser(String username) {
+    public Optional<User> getUser(String username)
+    {
         return userRepository.findById(username);
     }
 
@@ -121,17 +123,14 @@ public class UserService {
         }
     }
 
-    public void removeAuthority(String username, String authorityString) {
-        Optional<User> userOptional = userRepository.findById(username);
-        if (userOptional.isEmpty()) {
-            throw new UserNotFoundException();
-        }
-        else {
-            User user = userOptional.get();
-            user.removeAuthority(authorityString);
-            userRepository.save(user);
-        }
+    public void removeAuthority(String username, String authority) {
+        if (!userRepository.existsById(username)) throw new UsernameNotFoundException(username);
+        User user = userRepository.findById(username).orElse(null);
+        Authority authorityToRemove = user.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().orElse(null);
+        user.removeAuthority(authorityToRemove);
+        userRepository.save(user);
     }
+
 
     private boolean isValidPassword(String password) {
         final int MIN_LENGTH = 8;
@@ -177,5 +176,5 @@ public class UserService {
             throw new BadRequestException();
         }
     }
-
 }
+

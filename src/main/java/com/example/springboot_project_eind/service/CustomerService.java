@@ -6,6 +6,7 @@ import com.example.springboot_project_eind.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -63,5 +64,13 @@ public class CustomerService {
     public long createCustomer(Customer customer) {
         Customer newCustomer = customerRepository.save(customer);
         return newCustomer.getId();
+    }
+
+    public Collection<Customer> getAllCustomers() {
+        return (Collection<Customer>) customerRepository.findAll();
+    }
+
+    public Customer getCustomerByLastName(String name) {
+        return customerRepository.findByLastName(name);
     }
 }

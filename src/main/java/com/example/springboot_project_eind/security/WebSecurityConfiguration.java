@@ -1,6 +1,5 @@
-package nl.novi.security;
+package com.example.springboot_project_eind.security;
 
-import com.example.springboot_project_eind.security.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -70,10 +69,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers(PATCH,"/users/{^[\\w]$}/password").authenticated()
                 .antMatchers("/users/**").hasRole("ADMIN")
-                .antMatchers("/customers/**").hasRole("USER")
+                .antMatchers("/users/**").hasRole("USER")
                 .antMatchers(POST,"/authenticate").permitAll()
                 .antMatchers(GET,"/public").permitAll()
-                .anyRequest().denyAll()
+                .antMatchers(POST, "/users").permitAll()
+                .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
                 .formLogin().disable()
