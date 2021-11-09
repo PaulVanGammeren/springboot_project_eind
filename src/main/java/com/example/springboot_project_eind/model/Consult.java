@@ -2,7 +2,8 @@ package com.example.springboot_project_eind.model;
 
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "consult")
@@ -12,6 +13,19 @@ public class Consult {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(length = 600)
+    public String advice;
+
+    @Column
+    public LocalDate dateOfAppointment;
+
+    @Column
+    public String productAdvice;
+
+
+
+
+
     public long getId() {
         return id;
     }
@@ -20,15 +34,25 @@ public class Consult {
         this.id = id;
     }
 
-    public String getAdvies() {
-        return advies;
+    public String getAdvice() {
+        return advice;
     }
 
-    public void setAdvies(String advies) {
-        this.advies = advies;
+    public void setAdvice(String advice) {
+        this.advice = advice;
     }
 
-    private String advies;
+    public LocalDate getDateOfAppointment() {return dateOfAppointment;}
+
+    public void setDateOfAppointment (LocalDate dateOfAppointment) {this.dateOfAppointment = dateOfAppointment;}
+
+    public String getProductAdvice() {return productAdvice;}
+
+    public void setProductAdvice(String ProductAdvice) {this.productAdvice = productAdvice;}
+
+
+
+
 
 
 }

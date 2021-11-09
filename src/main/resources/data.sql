@@ -18,5 +18,5 @@ INSERT INTO products(price, product_name) VALUES (24, 'dagcreme');
 INSERT INTO products(price, product_name) VALUES (12, 'nachtcreme');
 INSERT INTO products(price, product_name) VALUES (19, 'toner');
 
-INSERT INTO consult(advies) VALUES('dit is advies 1 van onze schoonheidsspecialiste');
-INSERT INTO consult(advies) VALUES('dit is advies 2 van onze huidspecialiste');
+INSERT INTO consult(advice) VALUES('dit is advies 1 van onze schoonheidsspecialiste');
+INSERT INTO consult(advice) VALUES('dit is advies 2 van onze huidspecialiste');

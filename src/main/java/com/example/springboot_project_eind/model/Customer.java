@@ -26,7 +26,11 @@ public class Customer {
     public String eMail;
 
 
-
+    public Customer() {}
+    public Customer(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
 
     //getter en setters
@@ -63,6 +67,10 @@ public class Customer {
     public void seteMail(String eMail) {
         this.eMail = eMail;
     }
+    public String getFullName() {
+        return this.getFirstName() + " " + this.getLastName();
+    }
+
 
 }
 

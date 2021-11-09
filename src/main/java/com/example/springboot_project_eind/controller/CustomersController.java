@@ -19,6 +19,8 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin
+@RequestMapping(value = "/customers")
 public class CustomersController {
 
 
@@ -26,19 +28,19 @@ public class CustomersController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping(value = "/customers")
+    @GetMapping(value = "")
     public ResponseEntity getCustomers() {
         Iterable <Customer> customers = customerService.findAll();
         return ResponseEntity.ok(customers);
         }
 
 
-    @GetMapping(value = "/customers/{nr}")
+    @GetMapping(value = "/{nr}")
     public ResponseEntity getCustomer(@PathVariable long nr) {
             Optional<Customer> customer = customerService.findById(nr);
             return ResponseEntity.ok(customer);
     }
-    @PostMapping(value ="/customers")
+    @PostMapping(value ="/")
     public ResponseEntity<Object> createCustomer(@RequestBody Customer customer) {
         long newId = customerService.createCustomer(customer);
 
@@ -47,12 +49,12 @@ public class CustomersController {
 
         return ResponseEntity.created(location).build();
     }
-    @DeleteMapping(value = "/customers/{nr}")
+    @DeleteMapping(value = "/{nr}")
     public ResponseEntity deleteCustomer(@PathVariable long nr) {
         customerService.deleteById(nr);
         return ResponseEntity.ok("Deleted");
     }
-    @PutMapping(value = "/customer/{nr}")
+    @PutMapping(value = "/{nr}")
     public ResponseEntity updateCustomer(@PathVariable long nr, @RequestBody Customer customer) {
         customerService.updateCustomer(nr, customer);
         return ResponseEntity.noContent().build();

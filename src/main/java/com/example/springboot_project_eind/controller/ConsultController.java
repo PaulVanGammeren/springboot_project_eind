@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 public class ConsultController {
 
     @Autowired
@@ -19,9 +20,9 @@ public class ConsultController {
 
     @GetMapping(value = "/consult")
     public ResponseEntity getConsult() {
-        Iterable<Consult> spelers;
-        spelers = consultService.findAll();
-        return ResponseEntity.ok(spelers);
+        Iterable<Consult> consult;
+        consult = consultService.findAll();
+        return ResponseEntity.ok(consult);
     }
 
     @GetMapping(value = "/consult/{nr}")

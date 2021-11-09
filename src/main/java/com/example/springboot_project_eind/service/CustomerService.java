@@ -1,6 +1,7 @@
 package com.example.springboot_project_eind.service;
 
 import com.example.springboot_project_eind.exceptions.RecordNotFoundException;
+import com.example.springboot_project_eind.model.Consult;
 import com.example.springboot_project_eind.model.Customer;
 import com.example.springboot_project_eind.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class CustomerService {
 
 
     public Iterable<Customer> findAll() {
-        Iterable<Customer> customers = customerRepository.findAll();
-        return customers;
+        Iterable<Customer> customer = customerRepository.findAll();
+        return customer;
     }
 
 

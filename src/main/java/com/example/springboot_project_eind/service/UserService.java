@@ -47,6 +47,8 @@ public class UserService {
         return userRepository.findById(username);
     }
 
+
+
     public boolean userExists(String username) {
         return userRepository.existsById(username);
     }
@@ -61,12 +63,6 @@ public class UserService {
             user.setEmail(userPostRequest.getEmail());
             user.setEnabled(true);
             user.addAuthority("ROLE_USER");
-            for (String s : userPostRequest.getAuthorities()) {
-                if (!s.startsWith("ROLE_")) {
-                    s = "ROLE_" + s;
-                }
-                user.addAuthority(s);
-            }
 
             User newUser = userRepository.save(user);
             return newUser.getUsername();

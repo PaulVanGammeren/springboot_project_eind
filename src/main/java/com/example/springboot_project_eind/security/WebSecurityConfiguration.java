@@ -1,5 +1,6 @@
 package com.example.springboot_project_eind.security;
 
+import com.example.springboot_project_eind.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,25 +22,17 @@ import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private DataSource dataSource;
+    @Autowired
+    public CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
     @Autowired
-    WebSecurityConfiguration(DataSource dataSource, JwtRequestFilter jwtRequestFilter) {
-        this.dataSource = dataSource;
-        this.jwtRequestFilter = jwtRequestFilter;
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("SELECT username, password, enabled FROM users WHERE username=?")
-                .authoritiesByUsernameQuery("SELECT username, authority FROM authorities AS a WHERE username=?");
-
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(customUserDetailsService);
     }
 
     @Bean
@@ -47,16 +40,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
     @Override
+    @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-
-    @Bean
-    @Override
-    public UserDetailsService userDetailsServiceBean() throws Exception {
-        return super.userDetailsServiceBean();
     }
 
     @Override
@@ -66,16 +53,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
+                .antMatchers(POST, "/authenticate").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers(PATCH,"/users/{^[\\w]$}/password").authenticated()
-                .antMatchers("/users/**").hasRole("ADMIN")
-                .antMatchers("/users/**").hasRole("USER")
-                .antMatchers(POST,"/authenticate").permitAll()
-                .antMatchers(GET,"/public").permitAll()
+//                .antMatchers(PATCH,"/users/{^[\\w]$}/password").authenticated()
                 .antMatchers(POST, "/users").permitAll()
+
+                .antMatchers(GET,"/public").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
+                .cors().and()
                 .formLogin().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
