@@ -2,7 +2,9 @@ package com.example.springboot_project_eind.model;
 
 
 import javax.persistence.*;
+import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -21,10 +23,6 @@ public class Consult {
 
     @Column
     public String productAdvice;
-
-
-
-
 
     public long getId() {
         return id;
@@ -46,13 +44,12 @@ public class Consult {
 
     public void setDateOfAppointment (LocalDate dateOfAppointment) {this.dateOfAppointment = dateOfAppointment;}
 
-    public String getProductAdvice() {return productAdvice;}
+    public String getProductAdvice() {
+        return productAdvice;
+    }
 
-    public void setProductAdvice(String ProductAdvice) {this.productAdvice = productAdvice;}
-
-
-
-
-
+    public void setProductAdvice(String productAdvice) {
+        this.productAdvice = productAdvice;
+    }
 
 }

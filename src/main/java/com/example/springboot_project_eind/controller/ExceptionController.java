@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @ControllerAdvice
 public class ExceptionController {
 

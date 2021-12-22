@@ -15,11 +15,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.sql.DataSource;
 
 import static org.springframework.http.HttpMethod.*;
 
+@CrossOrigin
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -53,16 +55,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
+                .antMatchers(OPTIONS).permitAll()
                 .antMatchers(POST, "/authenticate").permitAll()
+                .antMatchers(OPTIONS, "/authenticate").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
 //                .antMatchers(PATCH,"/users/{^[\\w]$}/password").authenticated()
                 .antMatchers(POST, "/users").permitAll()
+//                .antMatchers(GET, "/consult").hasRole("USER")
 
                 .antMatchers(GET,"/public").permitAll()
                 .anyRequest().permitAll()
                 .and()
-                .csrf().disable()
-                .cors().and()
+                .cors().and().csrf().disable()
                 .formLogin().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -7,7 +7,6 @@ import com.example.springboot_project_eind.payload.request.UserPostRequest;
 import com.example.springboot_project_eind.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -15,12 +14,12 @@ import java.net.URI;
 import java.util.Map;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequestMapping(value = "/users")
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    public UserService userService;
 
 
     @GetMapping(value = "")
@@ -85,5 +84,10 @@ public class UserController {
         userService.setPassword(username, password);
         return ResponseEntity.noContent().build();
     }
+
+//    @GetMapping(value = "/{lastname}")
+//    public ResponseEntity<Object> getUser(@PathVariable("username") String username) {
+//        return ResponseEntity.ok().body(userService.getUser(username));
+//    }
 
 }

@@ -1,11 +1,15 @@
 package com.example.springboot_project_eind.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,12 +30,24 @@ public class User {
     private String email;
 
     @OneToMany(
-            targetEntity = Authority.class,
+            targetEntity = com.example.springboot_project_eind.model.Authority.class,
             mappedBy = "username",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.EAGER)
-    private Set<Authority> authorities = new HashSet<>();
+   private Set<Authority> authorities = new HashSet<>();
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private List<Consult> consult;
+    //nog aanpassen
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username")
+    private List <Image> image;
+
+
 
 
 
@@ -67,7 +83,7 @@ public class User {
         this.email = email;
     }
 
-    public Set<Authority> getAuthorities() {
+    public Set<com.example.springboot_project_eind.model.Authority> getAuthorities() {
         return authorities;
     }
 
@@ -91,7 +107,20 @@ public class User {
         this.authorities.remove(authority);
     }
 
+    public List<Consult> getConsult() {
+        return consult;
+    }
 
+    public void setConsult(List<Consult> consult) {
+        this.consult = consult;
+    }
 
+    public List<Image> getImage() {
+        return image;
+    }
+
+    public void setImage(List<Image> image) {
+        this.image = image;
+    }
 }
 

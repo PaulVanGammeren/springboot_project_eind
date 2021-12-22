@@ -2,10 +2,14 @@ package com.example.springboot_project_eind.service;
 
 
 import com.example.springboot_project_eind.exceptions.BadRequestException;
+import com.example.springboot_project_eind.exceptions.RecordNotFoundException;
 import com.example.springboot_project_eind.exceptions.UserNotFoundException;
 import com.example.springboot_project_eind.model.Authority;
+import com.example.springboot_project_eind.model.Image;
 import com.example.springboot_project_eind.model.User;
 import com.example.springboot_project_eind.payload.request.UserPostRequest;
+import com.example.springboot_project_eind.repository.ConsultRepository;
+import com.example.springboot_project_eind.repository.ImageRepository;
 import com.example.springboot_project_eind.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,11 +30,15 @@ import java.util.Set;
 public class UserService {
 
     private UserRepository userRepository;
+    private ConsultRepository consultRepository;
+    private ImageService imageService;
+    private ImageRepository imageRepository;
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, ConsultRepository consultRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.consultRepository = consultRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -171,6 +180,42 @@ public class UserService {
         else {
             throw new BadRequestException();
         }
+
     }
+    public void AssignConsultToUser(String username, Long consultId){
+        var optionalUsername = userRepository.findById(username);
+        var optionalConsult = consultRepository.findById(consultId);
+
+        if (optionalUsername.isPresent()&& optionalUsername.isPresent()){
+            var userName = optionalUsername.get();
+            var consult = optionalConsult.get();
+            var consults = userName.getConsult();
+            consults.add(consult);
+            userName.setConsult(consults);
+            userRepository.save(userName);
+        }
+    }
+    public void AssignImageToUser(String username, Long imageId){
+        var optionalUsername = userRepository.findById(username);
+        var optionalImage = imageRepository.findById(imageId);
+
+        if (optionalUsername.isPresent()&& optionalUsername.isPresent()){
+            var userName = optionalUsername.get();
+            var image = optionalImage.get();
+            var Images = userName.getImage();
+//            image.add(image);
+//            userName.setImage(image);
+            userRepository.save(userName);
+        }
+    }
+
+//    public void assignImageToUser(Long id, Long imageId) {
+//        if ((!imageRepository.existsById(id)) || (!imageRepository.existsById(imageId)))
+//            throw new RecordNotFoundException();
+//        User user = userRepository.findById(id).get();
+//        Image image = imageRepository.findById(imageId).get();
+//        user.setImage((List<Image>) image);
+//        userRepository.save(user);
+//    }
 }
 

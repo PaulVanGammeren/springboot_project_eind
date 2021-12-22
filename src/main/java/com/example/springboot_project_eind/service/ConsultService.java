@@ -7,6 +7,8 @@ import com.example.springboot_project_eind.repository.ConsultRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,8 +36,16 @@ public class ConsultService {
         }
     }
 
-    public void save(Consult consult) {
-        consultRepository.save(consult);
+//    public Collection<Consult> FindByUserName(String username){
+//        return consultRepository.findByUserName(username);
+//    }
+
+
+
+
+    public Long save(Consult consult) {
+        var newConsult =consultRepository.save(consult);
+        return newConsult.getId();
     }
 
     public void deleteById(long nr) {
@@ -47,5 +57,6 @@ public class ConsultService {
             throw new RecordNotFoundException();
         }
     }
+
 
 }
