@@ -22,6 +22,9 @@ public class Image {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "username")
+    private String username;
+
 
 
     @Column(name = "file", nullable = false)
@@ -39,8 +42,8 @@ public class Image {
     }
 //
 //    @OneToOne(mappedBy = "image")
-//    @JsonBackReference(value = "user-image")
-//    private User user;
+//    @JsonBackReference(value = "username-image")
+//    public User user;
 
     public long getId() {
         return id;
@@ -74,7 +77,11 @@ public class Image {
         this.file = file;
     }
 
+    public String getUsername() {
+        return username;
+    }
 
-
-
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

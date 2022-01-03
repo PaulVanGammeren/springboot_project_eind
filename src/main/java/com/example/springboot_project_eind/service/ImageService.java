@@ -24,9 +24,10 @@ public class ImageService {
         this.imageRepository = imageRepository;
     }
 
-    public Long uploadFile(MultipartFile multipartFile) throws IOException {
+    public Long uploadFile(MultipartFile multipartFile, String username) throws IOException {
         String fileName = multipartFile.getOriginalFilename();
         Image image = new Image(fileName, multipartFile.getContentType(), multipartFile.getBytes());
+        image.setUsername(username);
         imageRepository.save(image);
         return image.getId();
     }
@@ -35,6 +36,11 @@ public class ImageService {
         if (!imageRepository.existsById(id)) throw new RecordNotFoundException();
         return imageRepository.findById(id);
     }
+
+//    public Optional<Image> getFileByUsername(String username){
+//        if (!imageRepository.existsByUSername(username)) throw new RecordNotFoundException();
+//        return imageRepository.findByUsername(username);
+//    }
 
     public Collection<Image> getAllFiles(){
         return imageRepository.findAll();

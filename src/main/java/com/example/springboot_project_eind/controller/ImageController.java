@@ -40,11 +40,15 @@ public class ImageController {
     public ResponseEntity getFileById(@PathVariable("id") Long id) {
         return ResponseEntity.ok().body(imageService.getFileById(id));
     }
+//    @GetMapping(value = "/file-upload/{username}")
+//    public ResponseEntity getFileByUsername(@PathVariable("username") String username) {
+//        return ResponseEntity.ok().body(imageService.getFileByUsername(username));
+//    }
 
     // Upload an image to db
-    @PostMapping(value = "/file-upload")
-    public ResponseEntity<Object> upLoadFile(@RequestParam("file") MultipartFile multipartFile) throws IOException {
-        Long newId = imageService.uploadFile(multipartFile);
+    @PostMapping(value = "/file-upload/{username}")
+    public ResponseEntity<Object> upLoadFile(@PathVariable ("username") String username, @RequestParam("file") MultipartFile multipartFile) throws IOException {
+        Long newId = imageService.uploadFile(multipartFile, username);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{username}")
                 .buildAndExpand(newId).toUri();
         return ResponseEntity.created(location).header("Access-Control-Expose-Headers", "Location").build();
