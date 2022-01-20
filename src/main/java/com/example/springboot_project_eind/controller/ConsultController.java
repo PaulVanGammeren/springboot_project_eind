@@ -35,8 +35,9 @@ public class ConsultController {
         return ResponseEntity.ok(consult);
     }
 
+
 //    @GetMapping(value = "/consult/{username}")
-//    public ResponseEntity getConsult(@PathVariable String username) {
+//    public ResponseEntity findByUserName(@PathVariable String username) {
 //        Consult consult = consultService.findByUserName(username);
 //        return ResponseEntity.ok(consult);
 //    }

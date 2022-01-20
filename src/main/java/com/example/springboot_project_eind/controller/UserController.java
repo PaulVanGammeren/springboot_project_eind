@@ -82,12 +82,8 @@ public class UserController {
     @PatchMapping(value = "/{username}/password")
     public ResponseEntity<Object> setPassword(@PathVariable("username") String username, @RequestBody String password) {
         userService.setPassword(username, password);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 
-//    @GetMapping(value = "/{lastname}")
-//    public ResponseEntity<Object> getUser(@PathVariable("username") String username) {
-//        return ResponseEntity.ok().body(userService.getUser(username));
-//    }
 
 }

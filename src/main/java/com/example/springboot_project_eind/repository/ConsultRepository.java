@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ConsultRepository extends JpaRepository<Consult, Long> {
-
-//   Collection<Consult> findByUserName(String username);
 }
+//   Collection<Consult> findByUserName(String username);
+

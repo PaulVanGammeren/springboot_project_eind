@@ -36,10 +36,6 @@ public class ConsultService {
         }
     }
 
-//    public Collection<Consult> FindByUserName(String username){
-//        return consultRepository.findByUserName(username);
-//    }
-
 
 
 

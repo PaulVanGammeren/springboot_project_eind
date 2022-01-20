@@ -1,9 +1,9 @@
-package com.example.springboot_project_eind.repositoryTesting;
+//package com.example.springboot_project_eind.repositoryTesting;
 //
 //
 //
-//import com.example.springboot_project_eind.model.Customer;
-//import com.example.springboot_project_eind.repository.CustomerRepository;
+//import com.example.springboot_project_eind.model.User;
+//import com.example.springboot_project_eind.repository.UserRepository;
 //import org.testng.annotations.Test;
 //
 //
@@ -19,27 +19,27 @@ package com.example.springboot_project_eind.repositoryTesting;
 //
 //
 //@DataJpaTest
-//public class CustomerRepositoryTest {
+//public class UserRepositoryTest {
 //
 //    @Autowired
 //    private TestEntityManager entityManager;
 //
 //    @Autowired
-//    private CustomerRepository customerRepository;
-//
-//    @Test
-//    public void whenFindByName_thenReturnEmployee() {
-//
-//        // given
-//        Customer customer = new Customer("paul", "van Gammeren");
-//        entityManager.persist(customer);
-//        entityManager.flush();
-//
-//        // when
-//        Customer found = customerRepository.findByLastName(customer.getLastName());
-//
-//        // then
-//        assertThat(found.getLastName()).isEqualTo(customer.getLastName());
-//    }
-//
-//}
+//    private UserRepository userRepository;
+////
+////    @Test
+////    public void whenFindByName_thenReturnEmployee() {
+////
+////        // given
+////        User user = new User("paul", "van Gammeren");
+////        entityManager.persist(user);
+////        entityManager.flush();
+////
+////        // when
+////        User found = userRepository.findByLastName(user.getLastName());
+////
+////        // then
+////        assertThat(found.getLastName()).isEqualTo(user.getLastName());
+////    }
+////
+////}

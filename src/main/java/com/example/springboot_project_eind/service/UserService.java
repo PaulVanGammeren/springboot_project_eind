@@ -47,15 +47,13 @@ public class UserService {
         return ((UserDetails) authentication.getPrincipal()).getUsername();
     }
 
-    public Iterable <User> getUsers() {
+    public Iterable<User> getUsers() {
         return userRepository.findAll();
     }
 
-    public Optional<User> getUser(String username)
-    {
+    public Optional<User> getUser(String username) {
         return userRepository.findById(username);
     }
-
 
 
     public boolean userExists(String username) {
@@ -75,8 +73,7 @@ public class UserService {
 
             User newUser = userRepository.save(user);
             return newUser.getUsername();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             throw new BadRequestException();
         }
 
@@ -85,8 +82,7 @@ public class UserService {
     public void deleteUser(String username) {
         if (userRepository.existsById(username)) {
             userRepository.deleteById(username);
-        }
-        else {
+        } else {
             throw new UserNotFoundException();
         }
     }
@@ -95,8 +91,7 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(username);
         if (userOptional.isEmpty()) {
             throw new UserNotFoundException();
-        }
-        else {
+        } else {
             User user = userOptional.get();
             user.setPassword(passwordEncoder.encode(newUser.getPassword()));
             user.setEmail(newUser.getEmail());
@@ -109,8 +104,7 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(username);
         if (userOptional.isEmpty()) {
             throw new UserNotFoundException();
-        }
-        else {
+        } else {
             User user = userOptional.get();
             return user.getAuthorities();
         }
@@ -120,18 +114,17 @@ public class UserService {
         Optional<User> userOptional = userRepository.findById(username);
         if (userOptional.isEmpty()) {
             throw new UserNotFoundException();
-        }
-        else {
+        } else {
             User user = userOptional.get();
             user.addAuthority(authorityString);
             userRepository.save(user);
         }
     }
 
-    public void removeAuthority(String username, String authority) {
+    public void removeAuthority(String username, String authorityString) {
         if (!userRepository.existsById(username)) throw new UsernameNotFoundException(username);
         User user = userRepository.findById(username).orElse(null);
-        Authority authorityToRemove = user.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authority)).findAny().orElse(null);
+        Authority authorityToRemove = user.getAuthorities().stream().filter((a) -> a.getAuthority().equalsIgnoreCase(authorityString)).findAny().orElse(null);
         user.removeAuthority(authorityToRemove);
         userRepository.save(user);
     }
@@ -168,25 +161,23 @@ public class UserService {
                     User user = userOptional.get();
                     user.setPassword(passwordEncoder.encode(password));
                     userRepository.save(user);
-                }
-                else {
+                } else {
                     throw new UserNotFoundException();
                 }
-            }
-            else {
+            } else {
                 throw new BadRequestException();
             }
-        }
-        else {
+        } else {
             throw new BadRequestException();
         }
 
     }
-    public void AssignConsultToUser(String username, Long consultId){
+
+    public void AssignConsultToUser(String username, Long consultId) {
         var optionalUsername = userRepository.findById(username);
         var optionalConsult = consultRepository.findById(consultId);
 
-        if (optionalUsername.isPresent()&& optionalUsername.isPresent()){
+        if (optionalUsername.isPresent() && optionalUsername.isPresent()) {
             var userName = optionalUsername.get();
             var consult = optionalConsult.get();
             var consults = userName.getConsult();
@@ -195,27 +186,18 @@ public class UserService {
             userRepository.save(userName);
         }
     }
-    public void AssignImageToUser(String username, Long imageId){
+
+    public void AssignImageToUser(String username, Long imageId) {
         var optionalUsername = userRepository.findById(username);
         var optionalImage = imageRepository.findById(imageId);
 
-        if (optionalUsername.isPresent()&& optionalUsername.isPresent()){
+        if (optionalUsername.isPresent() && optionalUsername.isPresent()) {
             var userName = optionalUsername.get();
             var image = optionalImage.get();
             var Images = userName.getImage();
-//            image.add(image);
-//            userName.setImage(image);
             userRepository.save(userName);
         }
     }
-
-//    public void assignImageToUser(Long id, Long imageId) {
-//        if ((!imageRepository.existsById(id)) || (!imageRepository.existsById(imageId)))
-//            throw new RecordNotFoundException();
-//        User user = userRepository.findById(id).get();
-//        Image image = imageRepository.findById(imageId).get();
-//        user.setImage((List<Image>) image);
-//        userRepository.save(user);
-//    }
 }
+
 

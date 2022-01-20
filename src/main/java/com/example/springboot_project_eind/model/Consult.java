@@ -24,6 +24,8 @@ public class Consult {
     @Column
     public String productAdvice;
 
+
+
     public long getId() {
         return id;
     }
